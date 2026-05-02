@@ -173,15 +173,21 @@ function tryExtractPartialResult(jsonText: string): GenerationResult | null {
     const timelineMatch = jsonText.match(/"timeline"\s*:\s*\[/);
     if (timelineMatch) {
       // 個別エントリを正規表現で拾う（壊れたJSONから）
-      const periodMatches = [...jsonText.matchAll(/"period"\s*:\s*"([^"]+)"/g)];
-      const titleMatches = [...jsonText.matchAll(/"title"\s*:\s*"([^"]+)"/g)];
-      const typeMatches = [...jsonText.matchAll(/"type"\s*:\s*"([^"]+)"/g)];
+      const extractAll = (text: string, re: RegExp): string[] => {
+        const results: string[] = [];
+        let m;
+        while ((m = re.exec(text)) !== null) results.push(m[1]);
+        return results;
+      };
+      const periodMatches = extractAll(jsonText, /"period"\s*:\s*"([^"]+)"/g);
+      const titleMatches = extractAll(jsonText, /"title"\s*:\s*"([^"]+)"/g);
+      const typeMatches = extractAll(jsonText, /"type"\s*:\s*"([^"]+)"/g);
 
       for (let i = 0; i < periodMatches.length; i++) {
         timeline.push({
-          period: periodMatches[i]?.[1] ?? '',
-          type: (typeMatches[i]?.[1] as 'month' | 'year') ?? 'month',
-          title: titleMatches[i]?.[1] ?? '',
+          period: periodMatches[i] ?? '',
+          type: (typeMatches[i] as 'month' | 'year') ?? 'month',
+          title: titleMatches[i] ?? '',
           sanmeigaku_flow: '',
           path_dark: { story: '（データ取得中断）', bias: '' },
           path_light: { story: '（データ取得中断）', action: '', encouragement: '' },
