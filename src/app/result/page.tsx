@@ -38,14 +38,26 @@ export default function ResultPage() {
         <p className="text-gray-700 text-sm leading-relaxed">{result.summary}</p>
       </div>
 
-      <div className="bg-gray-900 rounded-2xl p-5 mb-4">
-        <h2 className="font-bold text-gray-200 mb-2 text-sm">⚡ 失敗シミュレーション</h2>
-        <p className="text-gray-300 text-sm leading-relaxed">{result.failure_simulation}</p>
-      </div>
-
-      <div className="bg-indigo-50 rounded-2xl p-5 mb-6">
-        <h2 className="font-bold text-indigo-700 mb-2 text-sm">✨ 成功パターン</h2>
-        <p className="text-indigo-800 text-sm leading-relaxed">{result.success_pattern}</p>
+      {/* 悪魔・天使 横並び総評 */}
+      <div className="rounded-2xl overflow-hidden shadow-sm mb-6">
+        <div className="grid grid-cols-2 divide-x divide-gray-700">
+          <div className="bg-gray-950 p-4">
+            <div className="flex items-center gap-1 mb-2">
+              <span className="text-xl">😈</span>
+              <span className="text-red-400 text-xs font-bold">負け続けた未来</span>
+            </div>
+            <p className="text-gray-300 text-xs leading-relaxed">{result.failure_simulation}</p>
+            <p className="text-gray-600 text-xs text-right mt-2">— 悪魔より</p>
+          </div>
+          <div className="bg-indigo-50 p-4">
+            <div className="flex items-center gap-1 mb-2">
+              <span className="text-xl">😇</span>
+              <span className="text-indigo-500 text-xs font-bold">行動を変えた未来</span>
+            </div>
+            <p className="text-indigo-800 text-xs leading-relaxed">{result.success_pattern}</p>
+            <p className="text-indigo-300 text-xs text-right mt-2">— ギャル天使より🩷</p>
+          </div>
+        </div>
       </div>
 
       <Timeline timeline={result.timeline} />

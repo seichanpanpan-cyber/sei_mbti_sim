@@ -9,7 +9,7 @@ export async function POST(req: Request) {
 
   const stream = await client.messages.stream({
     model: 'claude-haiku-4-5-20251001',
-    max_tokens: 4000,
+    max_tokens: 8000,
     system: buildSystemPrompt(),
     messages: [{ role: 'user', content: buildUserPrompt(input) }],
   });
@@ -27,6 +27,7 @@ export async function POST(req: Request) {
         }
         controller.close();
       } catch (err) {
+        console.error('Anthropic API error:', err);
         controller.error(err);
       }
     },
