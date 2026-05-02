@@ -169,7 +169,7 @@ function tryExtractPartialResult(jsonText: string): GenerationResult | null {
     if (!summaryMatch) return null;
 
     // timelineを配列として取り出す試み
-    let timeline: GenerationResult['timeline'] = [];
+    const timeline: GenerationResult['timeline'] = [];
     const timelineMatch = jsonText.match(/"timeline"\s*:\s*\[/);
     if (timelineMatch) {
       // 個別エントリを正規表現で拾う（壊れたJSONから）
